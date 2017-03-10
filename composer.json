@@ -1,0 +1,40 @@
+{
+  "name": "analogic/cryptocurrency-bundle",
+  "description": "Symfony bundle for simple cryptocurrencies daemon communication",
+  "keywords": ["symfony", "bundle"],
+  "homepage": "https://analogic.cz/",
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Stanislav Humplik",
+      "email": "sh@analogic.cz"
+    },
+    {
+      "name": "The Community",
+      "homepage": "https://github.com/analogic/cryptocurrency-bundle"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/analogic/cryptocurrency-bundle/issues"
+  },
+  "require": {
+    "php-64bit": ">=7.1.0",
+    "ext-bcmath": "*",
+    "ext-curl": "*",
+    "symfony/symfony": "^2.7|^3.1",
+    "symfony/event-dispatcher": "^3.2",
+    "analogic/socket": "^0.1"
+  },
+  "autoload": {
+    "psr-4": { "Analogic\\CryptocurrencyBundle\\": "src" }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.1.0-dev"
+    }
+  },
+  "config": {
+    "bin-dir": "bin"
+  }
+}

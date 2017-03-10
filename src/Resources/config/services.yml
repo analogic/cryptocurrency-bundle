@@ -1,0 +1,43 @@
+services:
+
+  analogic_cryptocurrency_bitcoind:
+      class: Analogic\CryptocurrencyBundle\Bitcoind\Bitcoind
+      arguments:
+        - "%analogic_cryptocurrency.bitcoind.dsn%"
+        - "%analogic_cryptocurrency.bitcoind.account%"
+        - "%analogic_cryptocurrency.bitcoind.estimate_fees_blocks%"
+
+  analogic_cryptocurrency.bitcoind_listener:
+      class: Analogic\CryptocurrencyBundle\Bitcoind\BitcoindListener
+      arguments:
+        - "%analogic_cryptocurrency.bitcoind.listen%"
+        - "%analogic_cryptocurrency.bitcoind.account%"
+        - "@event_dispatcher"
+        
+  analogic_cryptocurrency.litecoind:
+      class: Analogic\CryptocurrencyBundle\Litecoind\Litecoind
+      arguments:
+        - "%analogic_cryptocurrency.litecoind.dsn%"
+        - "%analogic_cryptocurrency.litecoind.account%"
+        - "%analogic_cryptocurrency.litecoind.estimate_fees_blocks%"
+
+  analogic_cryptocurrency.litecoind_listener:
+      class: Analogic\CryptocurrencyBundle\Litecoind\LitecoindListener
+      arguments:
+        - "%analogic_cryptocurrency.litecoind.listen%"
+        - "%analogic_cryptocurrency.litecoind.account%"
+        - "@event_dispatcher"
+        
+  analogic_cryptocurrency.dashd:
+      class: Analogic\CryptocurrencyBundle\Dashd\Dashd
+      arguments:
+        - "%analogic_cryptocurrency.dashd.dsn%"
+        - "%analogic_cryptocurrency.dashd.account%"
+        - "%analogic_cryptocurrency.dashd.estimate_fees_blocks%"
+
+  analogic_cryptocurrency.dashd_listener:
+      class: Analogic\CryptocurrencyBundle\Dashd\DashdListener
+      arguments:
+        - "%analogic_cryptocurrency.dashd.listen%"
+        - "%analogic_cryptocurrency.dashd.account%"
+        - "@event_dispatcher"
