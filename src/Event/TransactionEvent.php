@@ -14,17 +14,11 @@ class TransactionEvent extends Event
 
     private $transaction;
 
-    public function __construct(string $currency, string $data)
+    public function __construct(Transaction $transaction, string $currency, string $data)
     {
+        $this->transaction = $transaction;
         $this->currency = $currency;
         $this->data = $data;
-        $parsed = json_decode($data);
-
-        if(empty($parsed)) {
-            throw new \RuntimeException("Can't parse incoming JSON \"$data\": ".json_last_error_msg());
-        }
-
-        $this->transaction = new Transaction($parsed);
     }
 
     public function getTransaction(): Transaction

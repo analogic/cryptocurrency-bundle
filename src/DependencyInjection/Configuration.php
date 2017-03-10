@@ -18,14 +18,34 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('analogic_bitcoind');
+        $rootNode = $treeBuilder->root('analogic_cryptocurrency');
 
         $rootNode
             ->children()
-            ->scalarNode('dsn')->end()
-            ->scalarNode('account')->end()
-            ->integerNode('estimate_fees_blocks')->defaultValue(4)->end()
-            ->scalarNode('listen')->end()
+                ->arrayNode('bitcoind')
+                    ->children()
+                        ->scalarNode('dsn')->end()
+                        ->scalarNode('account')->end()
+                        ->integerNode('estimate_fees_blocks')->defaultValue(4)->end()
+                        ->scalarNode('listen')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('litecoind')
+                    ->children()
+                        ->scalarNode('dsn')->end()
+                        ->scalarNode('account')->end()
+                        ->integerNode('estimate_fees_blocks')->defaultValue(4)->end()
+                        ->scalarNode('listen')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('dashd')
+                    ->children()
+                        ->scalarNode('dsn')->end()
+                        ->scalarNode('account')->end()
+                        ->integerNode('estimate_fees_blocks')->defaultValue(4)->end()
+                        ->scalarNode('listen')->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 

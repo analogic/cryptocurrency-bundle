@@ -22,20 +22,20 @@ class AnalogicCryptocurrencyExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter($this->getAlias().'.bitcoind.dsn', $config['bitcoind.dsn']);
-        $container->setParameter($this->getAlias().'.bitcoind.listen', $config['bitcoind.listen']);
-        $container->setParameter($this->getAlias().'.bitcoind.account', $config['bitcoind.account']);
-        $container->setParameter($this->getAlias().'.bitcoind.estimate_fees_blocks', $config['bitcoind.estimate_fees_blocks']);
+        $container->setParameter($this->getAlias().'.bitcoind.dsn', $config['bitcoind']['dsn']);
+        $container->setParameter($this->getAlias().'.bitcoind.listen', $config['bitcoind']['listen']);
+        $container->setParameter($this->getAlias().'.bitcoind.account', $config['bitcoind']['account']);
+        $container->setParameter($this->getAlias().'.bitcoind.estimate_fees_blocks', $config['bitcoind']['estimate_fees_blocks']);
 
-        $container->setParameter($this->getAlias().'.litecoind.dsn', $config['litecoind.dsn']);
-        $container->setParameter($this->getAlias().'.litecoind.listen', $config['litecoind.listen']);
-        $container->setParameter($this->getAlias().'.litecoind.account', $config['litecoind.account']);
-        $container->setParameter($this->getAlias().'.litecoind.estimate_fees_blocks', $config['litecoind.estimate_fees_blocks']);
+        $container->setParameter($this->getAlias().'.litecoind.dsn', $config['litecoind']['dsn']);
+        $container->setParameter($this->getAlias().'.litecoind.listen', $config['litecoind']['listen']);
+        $container->setParameter($this->getAlias().'.litecoind.account', $config['litecoind']['account']);
+        $container->setParameter($this->getAlias().'.litecoind.estimate_fees_blocks', $config['litecoind']['estimate_fees_blocks']);
 
-        $container->setParameter($this->getAlias().'.dashd.dsn', $config['dashd.dsn']);
-        $container->setParameter($this->getAlias().'.dashd.listen', $config['dashd.listen']);
-        $container->setParameter($this->getAlias().'.dashd.account', $config['dashd.account']);
-        $container->setParameter($this->getAlias().'.dashd.estimate_fees_blocks', $config['dashd.estimate_fees_blocks']);
+        $container->setParameter($this->getAlias().'.dashd.dsn', $config['dashd']['dsn']);
+        $container->setParameter($this->getAlias().'.dashd.listen', $config['dashd']['listen']);
+        $container->setParameter($this->getAlias().'.dashd.account', $config['dashd']['account']);
+        $container->setParameter($this->getAlias().'.dashd.estimate_fees_blocks', $config['dashd']['estimate_fees_blocks']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');

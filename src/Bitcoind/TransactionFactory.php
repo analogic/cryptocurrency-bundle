@@ -6,8 +6,18 @@ use Analogic\CryptocurrencyBundle\Util\Bitcoin;
 use Analogic\CryptocurrencyBundle\Transaction\Move;
 use Analogic\CryptocurrencyBundle\Transaction\Transaction;
 
-class TransactionFactory
+class TransactionFactory implements TransactionFactoryInterface
 {
+    public function createFromString(string $data): Transaction
+    {
+        $parsed = json_decode($data);
+        if(empty($parsed)) {
+            throw new \RuntimeException("Can't parse incoming JSON \"$data\": ".json_last_error_msg());
+        }
+
+        return $this->createFromData($parsed);
+    }
+
     public function createFromData(\stdClass $data): Transaction
     {
         if(property_exists($data, "address")) {

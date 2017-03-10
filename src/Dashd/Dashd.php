@@ -2,9 +2,9 @@
 
 namespace Analogic\CryptocurrencyBundle\Dashd;
 
-use Analogic\CryptocurrencyBundle\Bitcoind\Bitcoind;
+use Analogic\CryptocurrencyBundle\Bitcoind\BitcoindBase;
 
-class Dashd extends Bitcoind
+final class Dashd extends BitcoindBase
 {
 
 }

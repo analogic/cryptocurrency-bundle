@@ -2,15 +2,15 @@
 
 namespace Analogic\CryptocurrencyBundle\Dashd;
 
-use Analogic\CryptocurrencyBundle\Bitcoind\BitcoindListener;
+use Analogic\CryptocurrencyBundle\Bitcoind\BitcoindListenerBase;
 use Analogic\CryptocurrencyBundle\Event\BlockEvent;
 use Analogic\CryptocurrencyBundle\Event\TransactionEvent;
 
-class DashListener extends BitcoindListener
+final class DashdListener extends BitcoindListenerBase
 {
     protected function newTransactionEvent($data)
     {
-        return new TransactionEvent('DASH', $data);
+        return new TransactionEvent($this->transactionFactory->createFromString($data), 'DASH', $data);
     }
 
     protected function newBlockEvent($data)

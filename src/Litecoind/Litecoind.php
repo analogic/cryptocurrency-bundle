@@ -2,9 +2,9 @@
 
 namespace Analogic\CryptocurrencyBundle\Litecoind;
 
-use Analogic\CryptocurrencyBundle\Bitcoind\Bitcoind;
+use Analogic\CryptocurrencyBundle\Bitcoind\BitcoindBase;
 
-class Litecoind extends Bitcoind
+final class Litecoind extends BitcoindBase
 {
 
 }

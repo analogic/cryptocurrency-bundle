@@ -2,15 +2,15 @@
 
 namespace Analogic\CryptocurrencyBundle\Litecoind;
 
-use Analogic\CryptocurrencyBundle\Bitcoind\BitcoindListener;
+use Analogic\CryptocurrencyBundle\Bitcoind\BitcoindListenerBase;
 use Analogic\CryptocurrencyBundle\Event\BlockEvent;
 use Analogic\CryptocurrencyBundle\Event\TransactionEvent;
 
-class LitecoindListener extends BitcoindListener
+final class LitecoindListener extends BitcoindListenerBase
 {
     protected function newTransactionEvent($data)
     {
-        return new TransactionEvent('LTC', $data);
+        return new TransactionEvent($this->transactionFactory->createFromString($data), 'LTC', $data);
     }
 
     protected function newBlockEvent($data)
