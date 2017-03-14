@@ -2,47 +2,41 @@
 
 namespace Analogic\CryptocurrencyBundle\Monero;
 
-use Analogic\CryptocurrencyBundle\Transaction\MoveList;
-
 class Transaction extends \Analogic\CryptocurrencyBundle\Transaction\Transaction
 {
-    protected $txid;
-    protected $paymentId;
-    protected $confirmations = 0;
-    protected $replaceable;
+    protected $height;
+    protected $moneroPaymentId;
+    protected $atomic;
 
-    public function isValid()
+    public function getHeight(): int
     {
-        return !(empty($this->txid) || empty($this->address) || empty($this->satoshi));
+        return $this->height;
     }
 
-    public function getTxid(): string
+    public function setHeight(int $height)
     {
-        return $this->txid;
+        $this->height = $height;
     }
 
-    public function setTxid(string $txid)
+    public function getMoneroPaymentId(): string
     {
-        $this->txid = $txid;
+        return $this->moneroPaymentId;
     }
 
-    public function getConfirmations(): int
+    public function setMoneroPaymentId(string $moneroPaymentId)
     {
-        return $this->confirmations;
+        $this->moneroPaymentId = $moneroPaymentId;
     }
 
-    public function setConfirmations(int $confirmations)
+    public function getAtomic(): int
     {
-        $this->confirmations = $confirmations;
+        return $this->atomic;
     }
 
-    public function getMoves(): MoveList
+    public function setAtomic(int $atomic)
     {
-        return $this->moves;
+        $this->atomic = $atomic;
     }
 
-    public function setMoves(MoveList $moveList): void
-    {
-        $this->moves = $moveList;
-    }
+
 }
