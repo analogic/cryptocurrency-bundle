@@ -56,3 +56,22 @@ services:
 
   analogic_cryptocurrency.dashd_transaction_factory:
       class: Analogic\CryptocurrencyBundle\Dashd\TransactionFactory
+      
+  analogic_cryptocurrency.dogecoind:
+      class: Analogic\CryptocurrencyBundle\Dogecoind\Dogecoind
+      arguments:
+        - "%analogic_cryptocurrency.dogecoind.dsn%"
+        - "%analogic_cryptocurrency.dogecoind.account%"
+        - "%analogic_cryptocurrency.dogecoind.estimate_fees_blocks%"
+        - "@analogic_cryptocurrency.dogecoind_transaction_factory"
+
+  analogic_cryptocurrency.dogecoind_listener:
+      class: Analogic\CryptocurrencyBundle\Dogecoind\DogecoindListener
+      arguments:
+        - "%analogic_cryptocurrency.dogecoind.listen%"
+        - "%analogic_cryptocurrency.dogecoind.account%"
+        - "@analogic_cryptocurrency.dogecoind_transaction_factory"
+        - "@event_dispatcher"
+
+  analogic_cryptocurrency.dogecoind_transaction_factory:
+      class: Analogic\CryptocurrencyBundle\Dogecoind\TransactionFactory

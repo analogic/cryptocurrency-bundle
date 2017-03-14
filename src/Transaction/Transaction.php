@@ -7,10 +7,6 @@ class Transaction
     protected $txid;
     protected $confirmations = 0;
     protected $replaceable;
-
-    /**
-     * @var Move[]
-     */
     protected $moves;
 
     public function __construct()

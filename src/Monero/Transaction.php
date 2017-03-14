@@ -2,22 +2,14 @@
 
 namespace Analogic\CryptocurrencyBundle\Monero;
 
+use Analogic\CryptocurrencyBundle\Transaction\MoveList;
+
 class Transaction extends \Analogic\CryptocurrencyBundle\Transaction\Transaction
 {
     protected $txid;
     protected $paymentId;
     protected $confirmations = 0;
     protected $replaceable;
-
-    /**
-     * @var Move[]
-     */
-    protected $moves;
-
-    public function __construct()
-    {
-        $this->moves = new MoveList();
-    }
 
     public function isValid()
     {
