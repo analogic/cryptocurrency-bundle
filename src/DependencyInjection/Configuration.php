@@ -46,6 +46,14 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('listen')->end()
                     ->end()
                 ->end()
+                ->arrayNode('dogecoind')
+                    ->children()
+                        ->scalarNode('dsn')->end()
+                        ->scalarNode('account')->end()
+                        ->integerNode('estimate_fees_blocks')->defaultValue(4)->end()
+                        ->scalarNode('listen')->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 

@@ -37,6 +37,11 @@ class AnalogicCryptocurrencyExtension extends Extension
         $container->setParameter($this->getAlias().'.dashd.account', $config['dashd']['account']);
         $container->setParameter($this->getAlias().'.dashd.estimate_fees_blocks', $config['dashd']['estimate_fees_blocks']);
 
+        $container->setParameter($this->getAlias().'.dogecoind.dsn', $config['dogecoind']['dsn']);
+        $container->setParameter($this->getAlias().'.dogecoind.listen', $config['dogecoind']['listen']);
+        $container->setParameter($this->getAlias().'.dogecoind.account', $config['dogecoind']['account']);
+        $container->setParameter($this->getAlias().'.dogecoind.estimate_fees_blocks', $config['dogecoind']['estimate_fees_blocks']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
     }
