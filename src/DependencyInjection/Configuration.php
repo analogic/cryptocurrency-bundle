@@ -54,6 +54,11 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('listen')->end()
                     ->end()
                 ->end()
+                ->arrayNode('monerod')
+                    ->children()
+                        ->scalarNode('dsn')->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 

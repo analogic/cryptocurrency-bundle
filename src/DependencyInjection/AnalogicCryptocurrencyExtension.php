@@ -42,6 +42,8 @@ class AnalogicCryptocurrencyExtension extends Extension
         $container->setParameter($this->getAlias().'.dogecoind.account', $config['dogecoind']['account']);
         $container->setParameter($this->getAlias().'.dogecoind.estimate_fees_blocks', $config['dogecoind']['estimate_fees_blocks']);
 
+        $container->setParameter($this->getAlias().'.monerod.dsn', $config['monerod']['dsn']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
     }

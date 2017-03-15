@@ -1,20 +1,20 @@
 <?php
 
-namespace Analogic\CryptocurrencyBundle\Monero;
+namespace Analogic\CryptocurrencyBundle\Monerod;
 
 final class Monerod
 {
-
     protected $dsn;
-    protected $account;
-    protected $estimateFeesBlocks;
+    protected $auth;
 
-    public function __construct(string $dsn, string $account, int $estimateFeesBlocks, TransactionFactoryInterface $transactionFactory)
+    public function __construct(string $dsn)
     {
-        $this->dsn = $dsn;
-        $this->account = $account;
-        $this->estimateFeesBlocks = $estimateFeesBlocks;
-        $this->transactionFactory = $transactionFactory;
+        if(preg_match('~//(.+?)@~', $dsn, $match)) {
+            $this->dsn = preg_replace('~//(.+?)@~', '//', $dsn);
+            $this->auth = $match[1];
+        } else {
+            $this->dsn = $dsn;
+        }
     }
 
     protected function execute($method, $params = null, string $id = null): \stdClass
@@ -34,7 +34,12 @@ final class Monerod
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTPHEADER     => array('Content-type: application/json'),
             CURLOPT_POSTFIELDS     => $json,
+            CURLOPT_HTTPAUTH       => CURLAUTH_DIGEST,
+            CURLOPT_USERPWD        => $this->auth,
         ));
+
+        curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+
         $response = curl_exec($ch);
         curl_close($ch);
 
@@ -42,14 +47,13 @@ final class Monerod
             throw new \Exception('The server is not available.');
         }
 
-        return json_decode($response);
+        $stdClass = json_decode($response);
 
-        /*
         if (!empty($stdClass->error)) {
             throw new \Exception($stdClass->error->message, $stdClass->error->code);
         }
 
-        return $stdClass;*/
+        return $stdClass;
     }
 
     public function getBulkPayments(array $paymentIds): TransactionList
@@ -85,6 +89,18 @@ final class Monerod
     {
         return $this->execute('getaddress')->result->address;
     }
+
+    public function splitIntegratedAddress($address): \stdClass
+    {
+        // returns ['payment_id' => ..., 'standard_address' => ...]
+        return $this->execute('split_integrated_address', ['integrated_address' => $address])->result;
+    }
+
+    public function makeIntegratedAddress(string $paymentId = ""): string
+    {
+        return  $this->execute('make_integrated_address', ['payment_id' => $paymentId])->result->integrated_address;
+    }
+
 
     public function pay(TransactionRequestList $paymentRequestList): string
     {

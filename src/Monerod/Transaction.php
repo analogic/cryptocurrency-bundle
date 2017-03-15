@@ -1,6 +1,6 @@
 <?php
 
-namespace Analogic\CryptocurrencyBundle\Monero;
+namespace Analogic\CryptocurrencyBundle\Monerod;
 
 class Transaction extends \Analogic\CryptocurrencyBundle\Transaction\Transaction
 {

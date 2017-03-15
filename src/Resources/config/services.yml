@@ -75,3 +75,15 @@ services:
 
   analogic_cryptocurrency.dogecoind_transaction_factory:
       class: Analogic\CryptocurrencyBundle\Dogecoind\TransactionFactory
+      
+
+  analogic_cryptocurrency.monerod:
+      class: Analogic\CryptocurrencyBundle\Monerod\Monerod
+      arguments:
+        - "%analogic_cryptocurrency.monerod.dsn%"
+
+  analogic_cryptocurrency.monerod_poller:
+      class: Analogic\CryptocurrencyBundle\Monerod\MonerodPoller
+      arguments:
+        - "@analogic_cryptocurrency.monerod"
+        - "@event_dispatcher"

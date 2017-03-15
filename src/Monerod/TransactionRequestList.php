@@ -1,6 +1,6 @@
 <?php
 
-namespace Analogic\CryptocurrencyBundle\Monero;
+namespace Analogic\CryptocurrencyBundle\Monerod;
 
 class TransactionRequestList implements \ArrayAccess, \Iterator
 {
