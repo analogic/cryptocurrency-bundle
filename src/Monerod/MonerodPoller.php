@@ -3,12 +3,14 @@
 namespace Analogic\CryptocurrencyBundle\Monerod;
 
 use Analogic\CryptocurrencyBundle\Event\BlockEvent;
+use Analogic\CryptocurrencyBundle\Event\TransactionEvent;
+use Analogic\CryptocurrencyBundle\Transaction\Transaction;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class MonerodPoller {
 
     protected $monerod;
-    protected $eventDispatcher;
+    public $eventDispatcher;
 
     private $lastBlockHeight = 0;
 
@@ -30,7 +32,11 @@ class MonerodPoller {
     }
 
     public function checkPayments(array $paymentIds) {
-        return $this->monerod->getBulkPayments($paymentIds);
+        $txs = $this->monerod->getBulkPayments($paymentIds);
+        foreach($txs as $tx) {
+            $event = new TransactionEvent($tx, 'XMR', $tx->getTxid());
+            $this->eventDispatcher->dispatch($event::NAME, $event);
+        }
     }
 }
 

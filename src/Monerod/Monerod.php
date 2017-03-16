@@ -2,6 +2,8 @@
 
 namespace Analogic\CryptocurrencyBundle\Monerod;
 
+use Analogic\CryptocurrencyBundle\Transaction\TransactionRequest;
+
 final class Monerod
 {
     protected $dsn;
@@ -60,7 +62,11 @@ final class Monerod
     {
         $transactions = new TransactionList();
 
-        $result = $this->execute('get_bulk_payments', $paymentIds)->result;
+        $result = $this->execute('get_bulk_payments', ['payment_ids' => $paymentIds])->result;
+        if(!property_exists($result, 'payments')) {
+            return $transactions;
+        }
+
         foreach($result->payments as $tx) {
             $transaction = new Transaction();
 
@@ -82,7 +88,7 @@ final class Monerod
 
     public function getBalance(): int
     {
-        return $this->execute('getbalance')->result->unlocked_balance;
+        return $this->execute('getbalance')->result->balance;
     }
 
     public function getAddress(): string
@@ -109,12 +115,17 @@ final class Monerod
         /** @var TransactionRequest $paymentRequest */
         foreach($paymentRequestList as $paymentRequest) {
             $output = ['amount' => $paymentRequest->getAtomic(), 'address' => $paymentRequest->getAddress()];
-            if($paymentRequest->getPaymentId()) { $output['payment_id'] = $paymentRequest->getPaymentId(); }
+            if (
+                $paymentRequest instanceof \Analogic\CryptocurrencyBundle\Monerod\TransactionRequest &&
+                !empty($paymentRequest->getPaymentId())
+            ) {
+                $output['payment_id'] = $paymentRequest->getPaymentId();
+            }
 
-            $outputs[] = $paymentRequest;
+            $outputs[] = $output;
         }
 
-        $result = $this->execute('transfer', ['destinations' => $outputs, 'mixin' => 0]);
+        $result = $this->execute('transfer', ['destinations' => $outputs, 'mixin' => 0, 'get_tx_key' => true, 'unlock_time' => 0]);
 
         return $result->result->tx_hash;
     }

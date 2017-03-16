@@ -2,6 +2,8 @@
 
 namespace Analogic\CryptocurrencyBundle\Monerod;
 
+use Analogic\CryptocurrencyBundle\Transaction\TransactionRequest;
+
 class TransactionRequestList implements \ArrayAccess, \Iterator
 {
     private $paymentRequests;

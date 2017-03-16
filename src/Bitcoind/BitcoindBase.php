@@ -110,7 +110,7 @@ abstract class BitcoindBase
 
         /** @var TransactionRequest $paymentRequest */
         foreach($paymentRequestList as $paymentRequest) {
-            $outputs[$paymentRequest->getAddress()] = Bitcoin::atomicToWhole($paymentRequest->getAtomic());
+            $outputs[$paymentRequest->getAddress()] = floatval(Bitcoin::atomicToWhole($paymentRequest->getAtomic()));
         }
 
         $this->setDynamicFees();
@@ -121,16 +121,9 @@ abstract class BitcoindBase
 
     public function paySingle(TransactionRequest $paymentRequest): string
     {
-        $this->setDynamicFees();
+        $list = new TransactionRequestList();
+        $list->push($paymentRequest);
 
-        $result = $this->execute('sendfrom', [
-            $this->account,
-            $paymentRequest->getAddress(),
-            Bitcoin::atomicToWhole($paymentRequest->getAtomic()),
-            1,
-            $paymentRequest->getComment()
-        ]);
-
-        return $result->result;
+        return $this->pay($list);
     }
 }
