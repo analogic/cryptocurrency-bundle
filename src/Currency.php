@@ -13,7 +13,7 @@ final class Currency
     const DASH = 'DASH';
     const DOGE = 'DOGE';
     const XMR = 'XMR';
-    const ETH = 'ETH';
+//    const ETH = 'ETH';
 
     public static function getCurrencies(): array
     {
@@ -24,7 +24,7 @@ final class Currency
             self::DASH,
             self::DOGE,
             self::XMR,
-            self::ETH
+//            self::ETH
         ];
     }
 }

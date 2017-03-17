@@ -59,6 +59,14 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('dsn')->end()
                     ->end()
                 ->end()
+
+//               ->arrayNode('ethereumd')
+//                    ->children()
+//                       ->scalarNode('dsn')->end()
+//                       ->scalarNode('account')->end()
+//                    ->end()
+//               ->end()
+
             ->end()
         ;
 

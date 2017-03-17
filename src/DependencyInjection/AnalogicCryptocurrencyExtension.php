@@ -44,6 +44,9 @@ class AnalogicCryptocurrencyExtension extends Extension
 
         $container->setParameter($this->getAlias().'.monerod.dsn', $config['monerod']['dsn']);
 
+//        $container->setParameter($this->getAlias().'.ethereumd.dsn', $config['ethereumd']['dsn']);
+//        $container->setParameter($this->getAlias().'.ethereumd.account', $config['ethereumd']['account']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
     }

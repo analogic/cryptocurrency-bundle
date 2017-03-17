@@ -32,6 +32,8 @@ class MonerodPoller {
     }
 
     public function checkPayments(array $paymentIds) {
+        if(empty($paymentIds)) return;
+
         $txs = $this->monerod->getBulkPayments($paymentIds);
         foreach($txs as $tx) {
             $event = new TransactionEvent($tx, Currency::XMR, $tx->getTxid());
