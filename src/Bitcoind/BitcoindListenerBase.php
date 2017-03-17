@@ -2,6 +2,7 @@
 
 namespace Analogic\CryptocurrencyBundle\Bitcoind;
 
+use Analogic\CryptocurrencyBundle\Currency;
 use Analogic\CryptocurrencyBundle\Event\BlockEvent;
 use Analogic\CryptocurrencyBundle\Event\TransactionEvent;
 use Socket\Socket;
@@ -55,12 +56,12 @@ abstract class BitcoindListenerBase {
 
     protected function newTransactionEvent($data)
     {
-        return new TransactionEvent($this->transactionFactory->createFromString($data), 'BTC', $data);
+        return new TransactionEvent($this->transactionFactory->createFromString($data), Currency::BTC, $data);
     }
 
     protected function newBlockEvent($data)
     {
-        return new BlockEvent('BTC', $data);
+        return new BlockEvent(Currency::BTC, $data);
     }
 }
 
