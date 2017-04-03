@@ -1,11 +1,22 @@
 services:
 
+  analogic_cryptocurrency.daemon:
+      class: Analogic\CryptocurrencyBundle\Daemon
+      arguments:
+        - "@analogic_cryptocurrency.dashd"
+        - "@analogic_cryptocurrency.bitcoind"
+        - "@analogic_cryptocurrency.ethereumd"
+        - "@analogic_cryptocurrency.litecoind"
+        - "@analogic_cryptocurrency.dogecoind"
+        - "@analogic_cryptocurrency.monerod"
+
   analogic_cryptocurrency.bitcoind:
       class: Analogic\CryptocurrencyBundle\Bitcoind\Bitcoind
       arguments:
         - "%analogic_cryptocurrency.bitcoind.dsn%"
         - "%analogic_cryptocurrency.bitcoind.account%"
         - "%analogic_cryptocurrency.bitcoind.estimate_fees_blocks%"
+        - "%analogic_cryptocurrency.bitcoind.minconf%"
         - '@analogic_cryptocurrency.bitcoind_transaction_factory'
 
   analogic_cryptocurrency.bitcoind_listener:
@@ -25,6 +36,7 @@ services:
         - "%analogic_cryptocurrency.litecoind.dsn%"
         - "%analogic_cryptocurrency.litecoind.account%"
         - "%analogic_cryptocurrency.litecoind.estimate_fees_blocks%"
+        - 1
         - "@analogic_cryptocurrency.litecoind_transaction_factory"
 
   analogic_cryptocurrency.litecoind_listener:
@@ -44,6 +56,7 @@ services:
         - "%analogic_cryptocurrency.dashd.dsn%"
         - "%analogic_cryptocurrency.dashd.account%"
         - "%analogic_cryptocurrency.dashd.estimate_fees_blocks%"
+        - 1
         - "@analogic_cryptocurrency.dashd_transaction_factory"
 
   analogic_cryptocurrency.dashd_listener:
@@ -63,6 +76,7 @@ services:
         - "%analogic_cryptocurrency.dogecoind.dsn%"
         - "%analogic_cryptocurrency.dogecoind.account%"
         - "%analogic_cryptocurrency.dogecoind.estimate_fees_blocks%"
+        - 1
         - "@analogic_cryptocurrency.dogecoind_transaction_factory"
 
   analogic_cryptocurrency.dogecoind_listener:
@@ -86,4 +100,17 @@ services:
       class: Analogic\CryptocurrencyBundle\Monerod\MonerodPoller
       arguments:
         - "@analogic_cryptocurrency.monerod"
+        - "@event_dispatcher"
+
+  analogic_cryptocurrency.ethereumd:
+      class: Analogic\CryptocurrencyBundle\Ethereumd\Ethereumd
+      arguments:
+        - "%analogic_cryptocurrency.ethereumd.dsn%"
+        - "%analogic_cryptocurrency.ethereumd.mother_account%"
+        - "%analogic_cryptocurrency.ethereumd.password%"
+
+  analogic_cryptocurrency.ethereumd_poller:
+      class: Analogic\CryptocurrencyBundle\Ethereumd\EthereumdPoller
+      arguments:
+        - "@analogic_cryptocurrency.ethereumd"
         - "@event_dispatcher"

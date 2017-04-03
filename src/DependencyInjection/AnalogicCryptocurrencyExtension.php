@@ -25,6 +25,7 @@ class AnalogicCryptocurrencyExtension extends Extension
         $container->setParameter($this->getAlias().'.bitcoind.dsn', $config['bitcoind']['dsn']);
         $container->setParameter($this->getAlias().'.bitcoind.listen', $config['bitcoind']['listen']);
         $container->setParameter($this->getAlias().'.bitcoind.account', $config['bitcoind']['account']);
+        $container->setParameter($this->getAlias().'.bitcoind.minconf', $config['bitcoind']['minconf']);
         $container->setParameter($this->getAlias().'.bitcoind.estimate_fees_blocks', $config['bitcoind']['estimate_fees_blocks']);
 
         $container->setParameter($this->getAlias().'.litecoind.dsn', $config['litecoind']['dsn']);
@@ -44,8 +45,9 @@ class AnalogicCryptocurrencyExtension extends Extension
 
         $container->setParameter($this->getAlias().'.monerod.dsn', $config['monerod']['dsn']);
 
-//        $container->setParameter($this->getAlias().'.ethereumd.dsn', $config['ethereumd']['dsn']);
-//        $container->setParameter($this->getAlias().'.ethereumd.account', $config['ethereumd']['account']);
+        $container->setParameter($this->getAlias().'.ethereumd.dsn', $config['ethereumd']['dsn']);
+        $container->setParameter($this->getAlias().'.ethereumd.mother_account', $config['ethereumd']['mother_account']);
+        $container->setParameter($this->getAlias().'.ethereumd.password', $config['ethereumd']['password']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');

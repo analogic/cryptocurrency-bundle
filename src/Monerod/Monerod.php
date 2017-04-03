@@ -2,9 +2,11 @@
 
 namespace Analogic\CryptocurrencyBundle\Monerod;
 
+use Analogic\CryptocurrencyBundle\Transaction\DaemonInterface;
 use Analogic\CryptocurrencyBundle\Transaction\TransactionRequest;
+use Analogic\CryptocurrencyBundle\Transaction\TransactionRequestList;
 
-final class Monerod
+final class Monerod implements DaemonInterface
 {
     protected $dsn;
     protected $auth;
@@ -110,31 +112,21 @@ final class Monerod
 
     public function pay(TransactionRequestList $paymentRequestList): string
     {
-        $outputs = [];
-
-        /** @var TransactionRequest $paymentRequest */
-        foreach($paymentRequestList as $paymentRequest) {
-            $output = ['amount' => $paymentRequest->getAtomic(), 'address' => $paymentRequest->getAddress()];
-            if (
-                $paymentRequest instanceof \Analogic\CryptocurrencyBundle\Monerod\TransactionRequest &&
-                !empty($paymentRequest->getPaymentId())
-            ) {
-                $output['payment_id'] = $paymentRequest->getPaymentId();
-            }
-
-            $outputs[] = $output;
-        }
-
-        $result = $this->execute('transfer', ['destinations' => $outputs, 'mixin' => 0, 'get_tx_key' => true, 'unlock_time' => 0]);
-
-        return $result->result->tx_hash;
+        throw new \RuntimeException("Please use pay single, multiple transactions not supported because of https://github.com/monero-project/monero/issues/1505");
     }
 
     public function paySingle(TransactionRequest $paymentRequest): string
     {
-        $a = new TransactionRequestList();
-        $a->push($paymentRequest);
+        $outputs = [];
 
-        return $this->pay($a);
+        $output = ['amount' => $paymentRequest->getAtomic(), 'address' => $paymentRequest->getAddress()];
+        if (!empty($paymentRequest->getPaymentId())) {
+            $output['payment_id'] = $paymentRequest->getPaymentId();
+        }
+        $outputs[] = $output;
+
+        $result = $this->execute('transfer', ['destinations' => $outputs, 'mixin' => 0, 'get_tx_key' => true, 'unlock_time' => 0]);
+
+        return $result->result->tx_hash;
     }
 }

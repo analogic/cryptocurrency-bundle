@@ -4,7 +4,7 @@ namespace Analogic\CryptocurrencyBundle\Transaction;
 
 class TransactionRequestList implements \ArrayAccess, \Iterator
 {
-    private $paymentRequests;
+    protected $paymentRequests;
 
     public function __construct(array $givenArray = array())
     {

@@ -2,23 +2,27 @@
 
 namespace Analogic\CryptocurrencyBundle\Bitcoind;
 
+use Analogic\CryptocurrencyBundle\Transaction\DaemonInterface;
 use Analogic\CryptocurrencyBundle\Util\Bitcoin;
 use Analogic\CryptocurrencyBundle\Transaction\Transaction;
 use Analogic\CryptocurrencyBundle\Transaction\TransactionList;
 use Analogic\CryptocurrencyBundle\Transaction\TransactionRequest;
 use Analogic\CryptocurrencyBundle\Transaction\TransactionRequestList;
 
-abstract class BitcoindBase
+abstract class BitcoindBase implements DaemonInterface
 {
 
     protected $dsn;
     protected $account;
     protected $estimateFeesBlocks;
+    protected $transactionFactory;
+    protected $minconf;
 
-    public function __construct(string $dsn, string $account, int $estimateFeesBlocks, TransactionFactoryInterface $transactionFactory)
+    public function __construct(string $dsn, string $account, int $estimateFeesBlocks, int $minconf = 1, TransactionFactoryInterface $transactionFactory)
     {
         $this->dsn = $dsn;
         $this->account = $account;
+        $this->minconf = $minconf;
         $this->estimateFeesBlocks = $estimateFeesBlocks;
         $this->transactionFactory = $transactionFactory;
     }
@@ -62,9 +66,9 @@ abstract class BitcoindBase
         return $result->isvalid;
     }
 
-    public function getBalanceInSatoshi($minconf = 1): int
+    public function getBalance(?int $minconf = null): int
     {
-        $btc = $this->execute('getbalance', $this->account, $minconf)->result;
+        $btc = $this->execute('getbalance', [$this->account, $minconf ?? $this->minconf])->result;
         return Bitcoin::wholeToAtomic($btc);
     }
 

@@ -27,6 +27,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('dsn')->end()
                         ->scalarNode('account')->end()
                         ->integerNode('estimate_fees_blocks')->defaultValue(4)->end()
+                        ->integerNode('minconf')->defaultValue(1)->end()
                         ->scalarNode('listen')->end()
                     ->end()
                 ->end()
@@ -59,13 +60,13 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('dsn')->end()
                     ->end()
                 ->end()
-
-//               ->arrayNode('ethereumd')
-//                    ->children()
-//                       ->scalarNode('dsn')->end()
-//                       ->scalarNode('account')->end()
-//                    ->end()
-//               ->end()
+                ->arrayNode('ethereumd')
+                    ->children()
+                       ->scalarNode('dsn')->end()
+                       ->scalarNode('mother_account')->end()
+                       ->scalarNode('password')->end()
+                    ->end()
+                ->end()
 
             ->end()
         ;
