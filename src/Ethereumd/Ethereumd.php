@@ -43,6 +43,8 @@ final class Ethereumd implements DaemonInterface
             CURLOPT_HTTPHEADER     => array('Content-type: application/json'),
             CURLOPT_POSTFIELDS     => $json,
             CURLOPT_HTTPAUTH       => CURLAUTH_DIGEST,
+            CURLOPT_CONNECTTIMEOUT => 2,
+            CURLOPT_TIMEOUT        => 5
         ));
 
         curl_setopt($ch, CURLINFO_HEADER_OUT, true);

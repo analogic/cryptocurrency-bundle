@@ -40,6 +40,8 @@ final class Monerod implements DaemonInterface
             CURLOPT_POSTFIELDS     => $json,
             CURLOPT_HTTPAUTH       => CURLAUTH_DIGEST,
             CURLOPT_USERPWD        => $this->auth,
+            CURLOPT_CONNECTTIMEOUT => 2,
+            CURLOPT_TIMEOUT        => 5
         ));
 
         curl_setopt($ch, CURLINFO_HEADER_OUT, true);
