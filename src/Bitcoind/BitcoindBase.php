@@ -50,7 +50,7 @@ abstract class BitcoindBase implements DaemonInterface
         curl_close($ch);
 
         if (false === $response) {
-            throw new \Exception('The server is not available.');
+            throw new \Exception('The server is not available. ('.curl_error($ch).')');
         }
 
         $stdClass = json_decode($response);
