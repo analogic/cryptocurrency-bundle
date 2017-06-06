@@ -116,7 +116,10 @@ abstract class BitcoindBase implements DaemonInterface
 
         /** @var TransactionRequest $paymentRequest */
         foreach($paymentRequestList as $paymentRequest) {
-            $outputs[$paymentRequest->getAddress()] = floatval(Bitcoin::atomicToWhole($paymentRequest->getAtomic()));
+            if(!isset($outputs[$paymentRequest->getAddress()])) {
+                $outputs[$paymentRequest->getAddress()] = 0;
+            }
+            $outputs[$paymentRequest->getAddress()] += floatval(Bitcoin::atomicToWhole($paymentRequest->getAtomic()));
         }
 
         $this->setDynamicFees();
