@@ -50,8 +50,8 @@ abstract class BitcoindBase implements DaemonInterface
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTPHEADER     => array('Content-type: application/json'),
             CURLOPT_POSTFIELDS     => $json,
-            CURLOPT_CONNECTTIMEOUT => 10,
-            CURLOPT_TIMEOUT        => 10
+            CURLOPT_CONNECTTIMEOUT => 30,
+            CURLOPT_TIMEOUT        => 30
         ));
         $response = curl_exec($ch);
         curl_close($ch);
