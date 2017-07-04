@@ -75,9 +75,11 @@ final class Ethereumd implements DaemonInterface
         return Ethereum::convertRawToGwei($this->execute('eth_getBalance', [$address, $type])->result);
     }
 
-    public function transferAllTo(string $account, string $toAccount, string $password): string
+    public function transferAllTo(string $account, string $toAccount, string $password): ?string
     {
         $balance = Ethereum::bchexdec($this->execute('eth_getBalance', [$account, self::LATEST])->result);
+        if($balance === 0) return null;
+
         $gasPrice = Ethereum::bchexdec($this->execute('eth_gasPrice')->result);
 
         $gas = 21000; // gas price per simple account to account transaction;
