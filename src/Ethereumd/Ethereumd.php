@@ -78,7 +78,7 @@ final class Ethereumd implements DaemonInterface
     public function transferAllTo(string $account, string $toAccount, string $password): ?string
     {
         $balance = Ethereum::bchexdec($this->execute('eth_getBalance', [$account, self::LATEST])->result);
-        if($balance === 0) return null;
+        if($balance == 0) return null;
 
         $gasPrice = Ethereum::bchexdec($this->execute('eth_gasPrice')->result);
 
