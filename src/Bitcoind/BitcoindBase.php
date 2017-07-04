@@ -117,7 +117,7 @@ abstract class BitcoindBase implements DaemonInterface
         }
     }
 
-    public function pay(TransactionRequestList $paymentRequestList): string
+    public function pay(TransactionRequestList $paymentRequestList, $dynamicFee = false): string
     {
         $outputs = [];
 
@@ -129,17 +129,17 @@ abstract class BitcoindBase implements DaemonInterface
             $outputs[$paymentRequest->getAddress()] += floatval(Bitcoin::atomicToWhole($paymentRequest->getAtomic()));
         }
 
-        $this->setDynamicFees();
+        if($dynamicFee) $this->setDynamicFees();
 
         $result = $this->execute('sendmany', [$this->account, $outputs, 1]);
         return $result->result;
     }
 
-    public function paySingle(TransactionRequest $paymentRequest): string
+    public function paySingle(TransactionRequest $paymentRequest, $dynamicFee = false): string
     {
         $list = new TransactionRequestList();
         $list->push($paymentRequest);
 
-        return $this->pay($list);
+        return $this->pay($list, $dynamicFee);
     }
 }
