@@ -2,7 +2,7 @@
 
 namespace Analogic\CryptocurrencyBundle\Transaction;
 
-class MoveList implements \ArrayAccess, \Iterator
+class MoveList implements \ArrayAccess, \Iterator, \Countable
 {
     private $moves;
 
@@ -11,17 +11,17 @@ class MoveList implements \ArrayAccess, \Iterator
         $this->moves = $givenArray;
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->moves);
     }
 
-    public function push(Move $move)
+    public function push(Move $move): void
     {
         $this->moves[$move->getVout()] = $move;
     }
 
-    public function merge(MoveList $movesList)
+    public function merge(MoveList $movesList): void
     {
         foreach($movesList as $move) {
             $this->push($move);
