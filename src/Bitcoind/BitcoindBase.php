@@ -38,12 +38,16 @@ abstract class BitcoindBase implements DaemonInterface
         }
 
         // floating precission encoding bug
-        // encoding float like 0.06780668 can end up as 0.06780668000000001 which is invalid for bitcoind to handle
-        // so we set serialize precission to 8
-        $previousPrecission = ini_get('serialize_precision');
-        ini_set('serialize_precision', 8);
+        // php 7.1 changed behaviour see https://wiki.php.net/rfc/precise_float_value, setting -1
+        $previousSerializePrecission = ini_get('serialize_precision');
+        $previousPrecission = ini_get('precision');
+        ini_set('precision', -1);
+        ini_set('serialize_precision', -1);
+
         $json = json_encode(array('method' => $method, 'params' => $params, 'id' => $id));
-        ini_set('serialize_precision', $previousPrecission);
+
+        ini_set('serialize_precision', $previousSerializePrecission);
+        ini_set('precision', $previousPrecission);
 
         curl_setopt_array($ch, array(
             CURLOPT_POST           => true,
