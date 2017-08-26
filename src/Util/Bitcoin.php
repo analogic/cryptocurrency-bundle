@@ -6,6 +6,7 @@ class Bitcoin
 {
     public static function wholeToAtomic(string $btc): int
     {
+        $btc = sprintf('%.8f', $btc); // bcmath can't work with exponential notation. thats just sad thing here :(
         return intval(bcmul($btc, "100000000", 8));
     }
 
