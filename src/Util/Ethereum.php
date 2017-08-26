@@ -7,6 +7,7 @@ class Ethereum
     // We use gwei internally because wei might be hitting bigint(db) or int64(php)
     public static function wholeToAtomic(string $btc): int
     {
+        $btc = sprintf('%.9f', $btc); // bcmath can't work with exponential notation. thats just sad thing here :(
         return intval(bcmul($btc, "1000000000", 9));
     }
 
