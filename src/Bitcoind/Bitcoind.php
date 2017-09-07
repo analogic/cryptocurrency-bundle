@@ -6,7 +6,10 @@ final class Bitcoind extends BitcoindBase {
     public function getNewAddress(): string
     {
         $address = parent::getNewAddress();
-        return $this->execute('addwitnessaddress', $address)->result;
+        $wAddress = $this->execute('addwitnessaddress', $address)->result;
+        $this->execute('setaccount', [$address, $this->account]);
+
+        return $wAddress;
     }
 }
 
