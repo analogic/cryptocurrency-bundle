@@ -146,6 +146,10 @@ final class Ethereumd implements DaemonInterface
         $block = $this->execute('eth_getBlockByNumber', [$number, true])->result;
         $arr = [];
 
+        if(!$block) {
+            return new TransactionList();
+        }
+
         foreach ($block->transactions as $transaction) {
             $tx = $this->transactionFactory->createFromData($transaction);
             $arr[] = $tx;
