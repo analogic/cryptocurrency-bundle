@@ -3,6 +3,7 @@
 namespace Analogic\CryptocurrencyBundle;
 
 use Analogic\CryptocurrencyBundle\Bitcoind\Bitcoind;
+use Analogic\CryptocurrencyBundle\BitcoinCashd\BitcoinCashd;
 use Analogic\CryptocurrencyBundle\Dashd\Dashd;
 use Analogic\CryptocurrencyBundle\Dogecoind\Dogecoind;
 use Analogic\CryptocurrencyBundle\Ethereumd\Ethereumd;
@@ -16,14 +17,16 @@ class Daemon
 {
     public $monerod;
     public $bitcoind;
+    public $bitcoinCashd;
     public $ethereumd;
     public $litecoind;
     public $dogecoind;
     public $dashd;
 
-    public function __construct(Dashd $dashd, Bitcoind $bitcoind, Ethereumd $ethereumd, Litecoind $litecoind, Dogecoind $dogecoind, Monerod $monerod)
+    public function __construct(Dashd $dashd, Bitcoind $bitcoind, BitcoinCashd $bitcoinCashd, Ethereumd $ethereumd, Litecoind $litecoind, Dogecoind $dogecoind, Monerod $monerod)
     {
         $this->dashd = $dashd;
+        $this->bitcoinCashd = $bitcoinCashd;
         $this->bitcoind = $bitcoind;
         $this->ethereumd = $ethereumd;
         $this->litecoind = $litecoind;
@@ -51,6 +54,7 @@ class Daemon
         switch ($currency) {
             case 'DASH': return $this->dashd;
             case 'BTC': return $this->bitcoind;
+            case 'BCH': return $this->bitcoinCashd;
             case 'ETH': return $this->ethereumd;
             case 'LTC': return $this->litecoind;
             case 'DOGE': return $this->dogecoind;

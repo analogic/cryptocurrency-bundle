@@ -3,6 +3,7 @@
 namespace Analogic\CryptocurrencyBundle\Ethereumd;
 
 use Analogic\CryptocurrencyBundle\Transaction\DaemonInterface;
+use Analogic\CryptocurrencyBundle\Transaction\TransactionList;
 use Analogic\CryptocurrencyBundle\Transaction\TransactionRequest;
 use Analogic\CryptocurrencyBundle\Transaction\TransactionRequestList;
 use Analogic\CryptocurrencyBundle\Util\Ethereum;
@@ -17,12 +18,14 @@ final class Ethereumd implements DaemonInterface
 
     public $motherAccount;
     public $password;
+    public $transactionFactory;
 
-    public function __construct(string $dsn, string $motherAccount, string $password)
+    public function __construct(string $dsn, string $motherAccount, string $password, TransactionFactory $transactionFactory)
     {
         $this->dsn = $dsn;
         $this->motherAccount = $motherAccount;
         $this->password = $password;
+        $this->transactionFactory = $transactionFactory;
     }
 
     protected function execute($method, $params = null, string $id = null): \stdClass
@@ -82,7 +85,7 @@ final class Ethereumd implements DaemonInterface
 
         $gasPrice = Ethereum::bchexdec($this->execute('eth_gasPrice')->result);
 
-        $gas = 21000; // gas price per simple account to account transaction;
+        $gas = 21000; // gas price per simple account to account transaction, change it later
         $value = bcsub($balance, bcmul($gas, $gasPrice));
 
         $payload =
@@ -136,5 +139,18 @@ final class Ethereumd implements DaemonInterface
         ];
 
         return $this->execute('personal_sendTransaction', $payload)->result;
+    }
+
+    public function getBlockTransactions(int $number): TransactionList
+    {
+        $block = $this->execute('eth_getBlockByNumber', [$number, true])->result;
+        $arr = [];
+
+        foreach ($block->transactions as $transaction) {
+            $tx = $this->transactionFactory->createFromData($transaction);
+            $arr[] = $tx;
+        }
+
+        return new TransactionList($arr);
     }
 }

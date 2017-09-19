@@ -3,6 +3,7 @@
 namespace Analogic\CryptocurrencyBundle;
 
 use Analogic\CryptocurrencyBundle\Util\Bitcoin;
+use Analogic\CryptocurrencyBundle\Util\BitcoinCash;
 use Analogic\CryptocurrencyBundle\Util\Dash;
 use Analogic\CryptocurrencyBundle\Util\Dogecoin;
 use Analogic\CryptocurrencyBundle\Util\Ethereum;
@@ -13,6 +14,7 @@ final class Currency
 {
     const LTC = 'LTC';
     const BTC = 'BTC';
+    const BCH = 'BCH';
     const USD = 'USD';
     const DASH = 'DASH';
     const DOGE = 'DOGE';
@@ -24,6 +26,7 @@ final class Currency
         return [
             self::LTC,
             self::BTC,
+            self::BCH,
             self::USD,
             self::DASH,
             self::DOGE,
@@ -37,6 +40,7 @@ final class Currency
         switch ($currency) {
             case self::LTC: return Litecoin::wholeToAtomic($amount);
             case self::BTC: return Bitcoin::wholeToAtomic($amount);
+            case self::BCH: return BitcoinCash::wholeToAtomic($amount);
             case self::DASH: return Dash::wholeToAtomic($amount);
             case self::DOGE: return Dogecoin::wholeToAtomic($amount);
             case self::XMR: return Monero::wholeToAtomic($amount);
@@ -50,6 +54,7 @@ final class Currency
         switch ($currency) {
             case self::LTC: return Litecoin::atomicToWhole($amount);
             case self::BTC: return Bitcoin::atomicToWhole($amount);
+            case self::BCH: return BitcoinCash::atomicToWhole($amount);
             case self::DASH: return Dash::atomicToWhole($amount);
             case self::DOGE: return Dogecoin::atomicToWhole($amount);
             case self::XMR: return Monero::atomicToWhole($amount);

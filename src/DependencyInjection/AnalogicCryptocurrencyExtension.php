@@ -28,6 +28,12 @@ class AnalogicCryptocurrencyExtension extends Extension
         $container->setParameter($this->getAlias().'.bitcoind.minconf', $config['bitcoind']['minconf']);
         $container->setParameter($this->getAlias().'.bitcoind.estimate_fees_blocks', $config['bitcoind']['estimate_fees_blocks']);
 
+        $container->setParameter($this->getAlias().'.bitcoincashd.dsn', $config['bitcoincashd']['dsn']);
+        $container->setParameter($this->getAlias().'.bitcoincashd.listen', $config['bitcoincashd']['listen']);
+        $container->setParameter($this->getAlias().'.bitcoincashd.account', $config['bitcoincashd']['account']);
+        $container->setParameter($this->getAlias().'.bitcoincashd.minconf', $config['bitcoincashd']['minconf']);
+        $container->setParameter($this->getAlias().'.bitcoincashd.estimate_fees_blocks', $config['bitcoincashd']['estimate_fees_blocks']);
+
         $container->setParameter($this->getAlias().'.litecoind.dsn', $config['litecoind']['dsn']);
         $container->setParameter($this->getAlias().'.litecoind.listen', $config['litecoind']['listen']);
         $container->setParameter($this->getAlias().'.litecoind.account', $config['litecoind']['account']);

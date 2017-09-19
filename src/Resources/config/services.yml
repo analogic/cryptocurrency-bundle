@@ -5,6 +5,7 @@ services:
       arguments:
         - "@analogic_cryptocurrency.dashd"
         - "@analogic_cryptocurrency.bitcoind"
+        - "@analogic_cryptocurrency.bitcoincashd"
         - "@analogic_cryptocurrency.ethereumd"
         - "@analogic_cryptocurrency.litecoind"
         - "@analogic_cryptocurrency.dogecoind"
@@ -29,6 +30,26 @@ services:
 
   analogic_cryptocurrency.bitcoind_transaction_factory:
         class: Analogic\CryptocurrencyBundle\Bitcoind\TransactionFactory
+
+  analogic_cryptocurrency.bitcoincashd:
+      class: Analogic\CryptocurrencyBundle\BitcoinCashd\BitcoinCashd
+      arguments:
+        - "%analogic_cryptocurrency.bitcoincashd.dsn%"
+        - "%analogic_cryptocurrency.bitcoincashd.account%"
+        - "%analogic_cryptocurrency.bitcoincashd.estimate_fees_blocks%"
+        - "%analogic_cryptocurrency.bitcoincashd.minconf%"
+        - '@analogic_cryptocurrency.bitcoincashd_transaction_factory'
+
+  analogic_cryptocurrency.bitcoincashd_listener:
+      class: Analogic\CryptocurrencyBundle\Bitcoind\BitcoinCashdListener
+      arguments:
+        - "%analogic_cryptocurrency.bitcoincashd.listen%"
+        - "%analogic_cryptocurrency.bitcoincashd.account%"
+        - '@analogic_cryptocurrency.bitcoincashd_transaction_factory'
+        - "@event_dispatcher"
+
+  analogic_cryptocurrency.bitcoincashd_transaction_factory:
+        class: Analogic\CryptocurrencyBundle\BitcoinCashd\TransactionFactory
 
   analogic_cryptocurrency.litecoind:
       class: Analogic\CryptocurrencyBundle\Litecoind\Litecoind
@@ -108,9 +129,7 @@ services:
         - "%analogic_cryptocurrency.ethereumd.dsn%"
         - "%analogic_cryptocurrency.ethereumd.mother_account%"
         - "%analogic_cryptocurrency.ethereumd.password%"
+        - "@analogic_cryptocurrency.ethereumd_transaction_factory"
 
-  analogic_cryptocurrency.ethereumd_poller:
-      class: Analogic\CryptocurrencyBundle\Ethereumd\EthereumdPoller
-      arguments:
-        - "@analogic_cryptocurrency.ethereumd"
-        - "@event_dispatcher"
+  analogic_cryptocurrency.ethereumd_transaction_factory:
+      class: Analogic\CryptocurrencyBundle\Ethereumd\TransactionFactory

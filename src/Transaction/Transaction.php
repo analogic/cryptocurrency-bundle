@@ -8,6 +8,7 @@ class Transaction
     protected $confirmations = 0;
     protected $replaceable;
     protected $moves;
+    protected $block = 0;
 
     public function __construct()
     {
@@ -47,5 +48,15 @@ class Transaction
     public function setMoves(MoveList $moveList): void
     {
         $this->moves = $moveList;
+    }
+
+    public function getBlock(): int
+    {
+        return $this->block;
+    }
+
+    public function setBlock(int $block)
+    {
+        $this->block = $block;
     }
 }
