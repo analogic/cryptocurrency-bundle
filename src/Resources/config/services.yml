@@ -41,7 +41,7 @@ services:
         - '@analogic_cryptocurrency.bitcoincashd_transaction_factory'
 
   analogic_cryptocurrency.bitcoincashd_listener:
-      class: Analogic\CryptocurrencyBundle\Bitcoind\BitcoinCashdListener
+      class: Analogic\CryptocurrencyBundle\BitcoinCashd\BitcoinCashdListener
       arguments:
         - "%analogic_cryptocurrency.bitcoincashd.listen%"
         - "%analogic_cryptocurrency.bitcoincashd.account%"
