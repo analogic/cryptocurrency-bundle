@@ -1,135 +1,96 @@
 services:
+  _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
 
-  analogic_cryptocurrency.daemon:
-      class: Analogic\CryptocurrencyBundle\Daemon
-      arguments:
-        - "@analogic_cryptocurrency.dashd"
-        - "@analogic_cryptocurrency.bitcoind"
-        - "@analogic_cryptocurrency.bitcoincashd"
-        - "@analogic_cryptocurrency.ethereumd"
-        - "@analogic_cryptocurrency.litecoind"
-        - "@analogic_cryptocurrency.dogecoind"
-        - "@analogic_cryptocurrency.monerod"
+  Analogic\CryptocurrencyBundle\Daemon: ~
+  Analogic\CryptocurrencyBundle\Bitcoind\TransactionFactory: ~
+  Analogic\CryptocurrencyBundle\BitcoinCashd\TransactionFactory: ~
+  Analogic\CryptocurrencyBundle\Litecoind\TransactionFactory: ~
+  Analogic\CryptocurrencyBundle\Dashd\TransactionFactory: ~
+  Analogic\CryptocurrencyBundle\Dogecoind\TransactionFactory: ~
+  Analogic\CryptocurrencyBundle\Monerod\MonerodPoller: ~
+  Analogic\CryptocurrencyBundle\Ethereumd\TransactionFactory: ~
 
-  analogic_cryptocurrency.bitcoind:
-      class: Analogic\CryptocurrencyBundle\Bitcoind\Bitcoind
+  Analogic\CryptocurrencyBundle\Bitcoind\Bitcoind:
       arguments:
         - "%analogic_cryptocurrency.bitcoind.dsn%"
         - "%analogic_cryptocurrency.bitcoind.account%"
         - "%analogic_cryptocurrency.bitcoind.estimate_fees_blocks%"
         - "%analogic_cryptocurrency.bitcoind.minconf%"
-        - '@analogic_cryptocurrency.bitcoind_transaction_factory'
+        - "@Analogic\\CryptocurrencyBundle\\Bitcoind\\TransactionFactory"
 
-  analogic_cryptocurrency.bitcoind_listener:
-      class: Analogic\CryptocurrencyBundle\Bitcoind\BitcoindListener
+
+  Analogic\CryptocurrencyBundle\Bitcoind\BitcoindListener:
       arguments:
         - "%analogic_cryptocurrency.bitcoind.listen%"
         - "%analogic_cryptocurrency.bitcoind.account%"
-        - '@analogic_cryptocurrency.bitcoind_transaction_factory'
-        - "@event_dispatcher"
+        - Analogic\CryptocurrencyBundle\Bitcoind\TransactionFactory
 
-  analogic_cryptocurrency.bitcoind_transaction_factory:
-        class: Analogic\CryptocurrencyBundle\Bitcoind\TransactionFactory
-
-  analogic_cryptocurrency.bitcoincashd:
-      class: Analogic\CryptocurrencyBundle\BitcoinCashd\BitcoinCashd
+  Analogic\CryptocurrencyBundle\BitcoinCashd\BitcoinCashd:
       arguments:
         - "%analogic_cryptocurrency.bitcoincashd.dsn%"
         - "%analogic_cryptocurrency.bitcoincashd.account%"
         - "%analogic_cryptocurrency.bitcoincashd.estimate_fees_blocks%"
         - "%analogic_cryptocurrency.bitcoincashd.minconf%"
-        - '@analogic_cryptocurrency.bitcoincashd_transaction_factory'
+        - Analogic\CryptocurrencyBundle\BitcoinCashd\TransactionFactory
 
-  analogic_cryptocurrency.bitcoincashd_listener:
-      class: Analogic\CryptocurrencyBundle\BitcoinCashd\BitcoinCashdListener
+  Analogic\CryptocurrencyBundle\BitcoinCashd\BitcoinCashdListener:
       arguments:
         - "%analogic_cryptocurrency.bitcoincashd.listen%"
         - "%analogic_cryptocurrency.bitcoincashd.account%"
-        - '@analogic_cryptocurrency.bitcoincashd_transaction_factory'
-        - "@event_dispatcher"
+        - Analogic\CryptocurrencyBundle\BitcoinCashd\TransactionFactory
 
-  analogic_cryptocurrency.bitcoincashd_transaction_factory:
-        class: Analogic\CryptocurrencyBundle\BitcoinCashd\TransactionFactory
-
-  analogic_cryptocurrency.litecoind:
-      class: Analogic\CryptocurrencyBundle\Litecoind\Litecoind
+  Analogic\CryptocurrencyBundle\Litecoind\Litecoind:
       arguments:
         - "%analogic_cryptocurrency.litecoind.dsn%"
         - "%analogic_cryptocurrency.litecoind.account%"
         - "%analogic_cryptocurrency.litecoind.estimate_fees_blocks%"
         - 1
-        - "@analogic_cryptocurrency.litecoind_transaction_factory"
+        - Analogic\CryptocurrencyBundle\Litecoind\TransactionFactory
 
-  analogic_cryptocurrency.litecoind_listener:
-      class: Analogic\CryptocurrencyBundle\Litecoind\LitecoindListener
+  Analogic\CryptocurrencyBundle\Litecoind\LitecoindListener:
       arguments:
         - "%analogic_cryptocurrency.litecoind.listen%"
         - "%analogic_cryptocurrency.litecoind.account%"
-        - "@analogic_cryptocurrency.litecoind_transaction_factory"
-        - "@event_dispatcher"
+        - Analogic\CryptocurrencyBundle\Litecoind\TransactionFactory
 
-  analogic_cryptocurrency.litecoind_transaction_factory:
-      class: Analogic\CryptocurrencyBundle\Litecoind\TransactionFactory
-        
-  analogic_cryptocurrency.dashd:
-      class: Analogic\CryptocurrencyBundle\Dashd\Dashd
+  Analogic\CryptocurrencyBundle\Dashd\Dashd:
       arguments:
         - "%analogic_cryptocurrency.dashd.dsn%"
         - "%analogic_cryptocurrency.dashd.account%"
         - "%analogic_cryptocurrency.dashd.estimate_fees_blocks%"
         - 1
-        - "@analogic_cryptocurrency.dashd_transaction_factory"
+        - Analogic\CryptocurrencyBundle\Dashd\TransactionFactory
 
-  analogic_cryptocurrency.dashd_listener:
-      class: Analogic\CryptocurrencyBundle\Dashd\DashdListener
+  Analogic\CryptocurrencyBundle\Dashd\DashdListener:
       arguments:
         - "%analogic_cryptocurrency.dashd.listen%"
         - "%analogic_cryptocurrency.dashd.account%"
-        - "@analogic_cryptocurrency.dashd_transaction_factory"
-        - "@event_dispatcher"
+        - Analogic\CryptocurrencyBundle\Dashd\TransactionFactory
 
-  analogic_cryptocurrency.dashd_transaction_factory:
-      class: Analogic\CryptocurrencyBundle\Dashd\TransactionFactory
-      
-  analogic_cryptocurrency.dogecoind:
-      class: Analogic\CryptocurrencyBundle\Dogecoind\Dogecoind
+  Analogic\CryptocurrencyBundle\Dogecoind\Dogecoind:
       arguments:
         - "%analogic_cryptocurrency.dogecoind.dsn%"
         - "%analogic_cryptocurrency.dogecoind.account%"
         - "%analogic_cryptocurrency.dogecoind.estimate_fees_blocks%"
         - 1
-        - "@analogic_cryptocurrency.dogecoind_transaction_factory"
+        - Analogic\CryptocurrencyBundle\Dogecoind\TransactionFactory
 
-  analogic_cryptocurrency.dogecoind_listener:
-      class: Analogic\CryptocurrencyBundle\Dogecoind\DogecoindListener
+  Analogic\CryptocurrencyBundle\Dogecoind\DogecoindListener:
       arguments:
         - "%analogic_cryptocurrency.dogecoind.listen%"
         - "%analogic_cryptocurrency.dogecoind.account%"
-        - "@analogic_cryptocurrency.dogecoind_transaction_factory"
-        - "@event_dispatcher"
+        - Analogic\CryptocurrencyBundle\Dogecoind\TransactionFactory
 
-  analogic_cryptocurrency.dogecoind_transaction_factory:
-      class: Analogic\CryptocurrencyBundle\Dogecoind\TransactionFactory
-      
-
-  analogic_cryptocurrency.monerod:
-      class: Analogic\CryptocurrencyBundle\Monerod\Monerod
+  Analogic\CryptocurrencyBundle\Monerod\Monerod:
       arguments:
         - "%analogic_cryptocurrency.monerod.dsn%"
 
-  analogic_cryptocurrency.monerod_poller:
-      class: Analogic\CryptocurrencyBundle\Monerod\MonerodPoller
-      arguments:
-        - "@analogic_cryptocurrency.monerod"
-        - "@event_dispatcher"
-
-  analogic_cryptocurrency.ethereumd:
-      class: Analogic\CryptocurrencyBundle\Ethereumd\Ethereumd
+  Analogic\CryptocurrencyBundle\Ethereumd\Ethereumd:
       arguments:
         - "%analogic_cryptocurrency.ethereumd.dsn%"
         - "%analogic_cryptocurrency.ethereumd.mother_account%"
         - "%analogic_cryptocurrency.ethereumd.password%"
-        - "@analogic_cryptocurrency.ethereumd_transaction_factory"
 
-  analogic_cryptocurrency.ethereumd_transaction_factory:
-      class: Analogic\CryptocurrencyBundle\Ethereumd\TransactionFactory
