@@ -47,7 +47,7 @@ class TransactionFactory implements TransactionFactoryInterface
 
         $move = new Move();
         $move->setVout(0);
-        $move->setAddress($data->to);
+        $move->setAddress($data->to === null ? "" : $data->to);
         $move->setAtomic(Ethereum::convertRawToGwei((string)$data->value));
 
         $transaction->getMoves()->push($move);
