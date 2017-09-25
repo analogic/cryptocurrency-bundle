@@ -143,7 +143,7 @@ final class Ethereumd implements DaemonInterface
 
     public function getBlockTransactions(int $number): TransactionList
     {
-        $block = $this->execute('eth_getBlockByNumber', [$number, true])->result;
+        $block = $this->execute('eth_getBlockByNumber', [Ethereum::bcdechex($number), true])->result;
         $arr = [];
 
         if(!$block) {

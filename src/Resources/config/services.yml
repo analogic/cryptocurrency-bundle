@@ -26,7 +26,6 @@ services:
       arguments:
         - "%analogic_cryptocurrency.bitcoind.listen%"
         - "%analogic_cryptocurrency.bitcoind.account%"
-        - Analogic\CryptocurrencyBundle\Bitcoind\TransactionFactory
 
   Analogic\CryptocurrencyBundle\BitcoinCashd\BitcoinCashd:
       arguments:
@@ -34,13 +33,11 @@ services:
         - "%analogic_cryptocurrency.bitcoincashd.account%"
         - "%analogic_cryptocurrency.bitcoincashd.estimate_fees_blocks%"
         - "%analogic_cryptocurrency.bitcoincashd.minconf%"
-        - Analogic\CryptocurrencyBundle\BitcoinCashd\TransactionFactory
 
   Analogic\CryptocurrencyBundle\BitcoinCashd\BitcoinCashdListener:
       arguments:
         - "%analogic_cryptocurrency.bitcoincashd.listen%"
         - "%analogic_cryptocurrency.bitcoincashd.account%"
-        - Analogic\CryptocurrencyBundle\BitcoinCashd\TransactionFactory
 
   Analogic\CryptocurrencyBundle\Litecoind\Litecoind:
       arguments:
@@ -48,13 +45,11 @@ services:
         - "%analogic_cryptocurrency.litecoind.account%"
         - "%analogic_cryptocurrency.litecoind.estimate_fees_blocks%"
         - 1
-        - Analogic\CryptocurrencyBundle\Litecoind\TransactionFactory
 
   Analogic\CryptocurrencyBundle\Litecoind\LitecoindListener:
       arguments:
         - "%analogic_cryptocurrency.litecoind.listen%"
         - "%analogic_cryptocurrency.litecoind.account%"
-        - Analogic\CryptocurrencyBundle\Litecoind\TransactionFactory
 
   Analogic\CryptocurrencyBundle\Dashd\Dashd:
       arguments:
@@ -62,13 +57,11 @@ services:
         - "%analogic_cryptocurrency.dashd.account%"
         - "%analogic_cryptocurrency.dashd.estimate_fees_blocks%"
         - 1
-        - Analogic\CryptocurrencyBundle\Dashd\TransactionFactory
 
   Analogic\CryptocurrencyBundle\Dashd\DashdListener:
       arguments:
         - "%analogic_cryptocurrency.dashd.listen%"
         - "%analogic_cryptocurrency.dashd.account%"
-        - Analogic\CryptocurrencyBundle\Dashd\TransactionFactory
 
   Analogic\CryptocurrencyBundle\Dogecoind\Dogecoind:
       arguments:
@@ -76,13 +69,10 @@ services:
         - "%analogic_cryptocurrency.dogecoind.account%"
         - "%analogic_cryptocurrency.dogecoind.estimate_fees_blocks%"
         - 1
-        - Analogic\CryptocurrencyBundle\Dogecoind\TransactionFactory
-
   Analogic\CryptocurrencyBundle\Dogecoind\DogecoindListener:
       arguments:
         - "%analogic_cryptocurrency.dogecoind.listen%"
         - "%analogic_cryptocurrency.dogecoind.account%"
-        - Analogic\CryptocurrencyBundle\Dogecoind\TransactionFactory
 
   Analogic\CryptocurrencyBundle\Monerod\Monerod:
       arguments:
