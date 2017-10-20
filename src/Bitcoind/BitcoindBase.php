@@ -41,8 +41,9 @@ abstract class BitcoindBase implements DaemonInterface
         // php 7.1 changed behaviour see https://wiki.php.net/rfc/precise_float_value, setting -1
         $previousSerializePrecission = ini_get('serialize_precision');
         $previousPrecission = ini_get('precision');
-        ini_set('precision', -1);
-        ini_set('serialize_precision', -1);
+
+        ini_set('precision', 8);
+        ini_set('serialize_precision', 8);
 
         $json = json_encode(array('method' => $method, 'params' => $params, 'id' => $id));
 
