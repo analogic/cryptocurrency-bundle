@@ -91,6 +91,11 @@ abstract class BitcoindBase implements DaemonInterface
         return $this->execute('getnewaddress', $this->account)->result;
     }
 
+    public function getHeight(): int
+    {
+        return $this->execute('getblockcount')->result;
+    }
+
     public function getTransaction(string $txid): ?Transaction
     {
         $rawTransaction = $this->execute('gettransaction', $txid)->result;
