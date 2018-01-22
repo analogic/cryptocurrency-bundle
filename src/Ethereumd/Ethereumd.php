@@ -28,7 +28,7 @@ final class Ethereumd implements DaemonInterface
         $this->transactionFactory = $transactionFactory;
     }
 
-    protected function execute($method, $params = null, string $id = null): \stdClass
+    public function execute($method, $params = null, string $id = null): \stdClass
     {
         $ch = curl_init($this->dsn);
 

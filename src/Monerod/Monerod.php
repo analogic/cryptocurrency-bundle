@@ -21,7 +21,7 @@ final class Monerod implements DaemonInterface
         }
     }
 
-    protected function execute($method, $params = null, string $id = null): \stdClass
+    public function execute($method, $params = null, string $id = null): \stdClass
     {
         $ch = curl_init($this->dsn);
 
