@@ -24,7 +24,8 @@
     "ext-curl": "*",
     "symfony/symfony": "^3.3",
     "symfony/event-dispatcher": "^3.2",
-    "analogic/socket": "^0.1"
+    "analogic/socket": "^0.1",
+    "lightningsale/lnd-rest": "*"
   },
   "autoload": {
     "psr-4": { "Analogic\\CryptocurrencyBundle\\": "src" }
