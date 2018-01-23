@@ -6,15 +6,14 @@ use Analogic\CryptocurrencyBundle\Transaction\DaemonInterface;
 use Analogic\CryptocurrencyBundle\Transaction\TransactionRequest;
 use Analogic\CryptocurrencyBundle\Transaction\TransactionRequestList;
 use Analogic\CryptocurrencyBundle\Util\Bitcoin;
-use LightningSale\LndRest\Model\SendCoinsRequest;
-use LightningSale\LndRest\Model\SendRequest;
-use LightningSale\LndRest\Resource\LndClient;
+use LightningSale\LndClient\Model\AddInvoiceResponse;
+use LightningSale\LndClient\RestClient;
 
 abstract class Lnd implements DaemonInterface
 {
     private $c;
 
-    public function __construct(LndClient $c)
+    public function __construct(RestClient $c)
     {
         $this->c = $c;
     }
@@ -24,6 +23,10 @@ abstract class Lnd implements DaemonInterface
         throw new \RuntimeException("Please use pay single, multiple transactions not supported");
     }
 
+    /**
+     * @param TransactionRequest $payment
+     * @return string TXID
+     */
     public function paySingle(TransactionRequest $payment): string
     {
         $req = $this->c->decodePayReq($payment->getAddress());
@@ -36,10 +39,13 @@ abstract class Lnd implements DaemonInterface
             throw new \RuntimeException("Invalid amount in paymentRequest: ".$req->getNumSatoshis()." vs user requested: ".$payment->getAtomic());
         }
 
-        //$scr = new SendRequest()
-        //$this->c->sendCoins()
+        $sendResponse = $this->c->sendPaymentRequest($payment->getAddress());
 
-        return uniqid();
+        if (strlen($sendResponse->getPaymentError()) !== 0) {
+            throw new \RuntimeException($sendResponse->getPaymentError());
+        }
+
+        return $sendResponse->getPaymentPreimage();
     }
 
     public function getBalance(): int
@@ -47,8 +53,8 @@ abstract class Lnd implements DaemonInterface
         return Bitcoin::wholeToAtomic($this->c->walletBalance()->getConfirmedBalance());
     }
 
-    public function addInvoice(int $atomic, string $memo): string
+    public function addInvoice(int $atomic, string $memo): AddInvoiceResponse
     {
-
+        return $this->c->addInvoice($memo, $atomic);
     }
 }
