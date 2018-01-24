@@ -104,7 +104,7 @@ class TransactionFactory implements TransactionFactoryInterface
         return $transaction;
     }
 
-    private function importMove($data): Move
+    protected function importMove($data): Move
     {
         $move = new Move();
         $move->setAccount($data->account);

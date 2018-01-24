@@ -24,15 +24,11 @@
     "ext-curl": "*",
     "symfony/symfony": "^3.3",
     "symfony/event-dispatcher": "^3.2",
-    "analogic/socket": "^0.1"
+    "analogic/socket": "^0.1",
+    "btccom/cashaddress": "^0.0.3"
   },
   "autoload": {
     "psr-4": { "Analogic\\CryptocurrencyBundle\\": "src" }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "0.1.28-dev"
-    }
   },
   "config": {
     "bin-dir": "bin"
