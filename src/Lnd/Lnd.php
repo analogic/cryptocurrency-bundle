@@ -8,14 +8,20 @@ use Analogic\CryptocurrencyBundle\Transaction\TransactionRequestList;
 use Analogic\CryptocurrencyBundle\Util\Bitcoin;
 use LightningSale\LndClient\Model\AddInvoiceResponse;
 use LightningSale\LndClient\RestClient;
+use GuzzleHttp\Client;
 
 abstract class Lnd implements DaemonInterface
 {
     private $c;
 
-    public function __construct(RestClient $c)
+    public function __construct(string $dsn)
     {
-        $this->c = $c;
+        $client = new Client([
+            'base_uri' => $dsn,
+            'verify' => false, // we assume that internal infrastructure is safe
+        ]);
+
+        $this->c = new RestClient($client);
     }
 
     public function pay(TransactionRequestList $paymentRequestList): string
