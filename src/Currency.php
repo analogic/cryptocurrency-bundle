@@ -14,6 +14,7 @@ final class Currency
 {
     const LTC = 'LTC';
     const BTC = 'BTC';
+    const LBTC = 'LBTC';
     const BCH = 'BCH';
     const USD = 'USD';
     const DASH = 'DASH';
@@ -26,6 +27,7 @@ final class Currency
         return [
             self::LTC,
             self::BTC,
+            self::LBTC,
             self::BCH,
             self::USD,
             self::DASH,
@@ -34,19 +36,20 @@ final class Currency
             self::ETH
         ];
     }
-    
+
     public static function wholeToAtomic(string $currency, string $amount): int
     {
         switch ($currency) {
             case self::LTC: return Litecoin::wholeToAtomic($amount);
             case self::BTC: return Bitcoin::wholeToAtomic($amount);
+            case self::LBTC: return Bitcoin::wholeToAtomic($amount);
             case self::BCH: return BitcoinCash::wholeToAtomic($amount);
             case self::DASH: return Dash::wholeToAtomic($amount);
             case self::DOGE: return Dogecoin::wholeToAtomic($amount);
             case self::XMR: return Monero::wholeToAtomic($amount);
             case self::ETH: return Ethereum::wholeToAtomic($amount);
             default: throw new \RuntimeException("Currency $currency not implemented");
-        }    
+        }
     }
 
     public static function atomicToWhole(string $currency, int $amount): string
@@ -54,6 +57,7 @@ final class Currency
         switch ($currency) {
             case self::LTC: return Litecoin::atomicToWhole($amount);
             case self::BTC: return Bitcoin::atomicToWhole($amount);
+            case self::LBTC: return Bitcoin::atomicToWhole($amount);
             case self::BCH: return BitcoinCash::atomicToWhole($amount);
             case self::DASH: return Dash::atomicToWhole($amount);
             case self::DOGE: return Dogecoin::atomicToWhole($amount);

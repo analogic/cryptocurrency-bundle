@@ -25,7 +25,8 @@
     "symfony/symfony": "^3.3",
     "symfony/event-dispatcher": "^3.2",
     "analogic/socket": "^0.1",
-    "btccom/cashaddress": "^0.0.3"
+    "btccom/cashaddress": "^0.0.3",
+    "lightningsale/lnd-client": "*"
   },
   "autoload": {
     "psr-4": { "Analogic\\CryptocurrencyBundle\\": "src" }
