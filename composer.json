@@ -30,11 +30,6 @@
   "autoload": {
     "psr-4": { "Analogic\\CryptocurrencyBundle\\": "src" }
   },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "0.1.27-dev"
-    }
-  },
   "config": {
     "bin-dir": "bin"
   }
