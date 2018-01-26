@@ -55,6 +55,8 @@ class AnalogicCryptocurrencyExtension extends Extension
         $container->setParameter($this->getAlias().'.ethereumd.mother_account', $config['ethereumd']['mother_account']);
         $container->setParameter($this->getAlias().'.ethereumd.password', $config['ethereumd']['password']);
 
+        $container->setParameter($this->getAlias().'.bitcoinlnd.dsn', $config['bitcoinlnd']['dsn']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
     }

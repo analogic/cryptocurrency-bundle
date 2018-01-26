@@ -76,6 +76,11 @@ class Configuration implements ConfigurationInterface
                        ->scalarNode('password')->end()
                     ->end()
                 ->end()
+                ->arrayNode('bitcoinlnd')
+                    ->children()
+                        ->scalarNode('dsn')->end()
+                    ->end()
+                ->end()
 
             ->end()
         ;

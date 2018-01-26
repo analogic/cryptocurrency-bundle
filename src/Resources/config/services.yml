@@ -86,4 +86,4 @@ services:
 
   Analogic\CryptocurrencyBundle\BitcoinLnd:
       arguments:
-        - "%analogic_cryptocurrency.bitcoin_lnd.dsn%"
+        - "%analogic_cryptocurrency.bitcoinlnd.dsn%"
