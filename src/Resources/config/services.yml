@@ -84,6 +84,6 @@ services:
         - "%analogic_cryptocurrency.ethereumd.mother_account%"
         - "%analogic_cryptocurrency.ethereumd.password%"
 
-  Analogic\CryptocurrencyBundle\BitcoinLnd:
+  Analogic\CryptocurrencyBundle\BitcoinLnd\BitcoinLnd:
       arguments:
         - "%analogic_cryptocurrency.bitcoinlnd.dsn%"
