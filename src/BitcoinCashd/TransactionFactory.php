@@ -14,9 +14,8 @@ class TransactionFactory extends \Analogic\CryptocurrencyBundle\Bitcoind\Transac
         $move->setAccount($data->account);
         $move->setCategory($data->category);
 
-        if (preg_match('/^bitcoincash/', $data->address)) {
-            list ($retPrefix, $retScriptType, $retHash) = CashAddress::decode($data->address);
-            $move->setAddress($retHash);
+        if (!preg_match('/^bitcoincash/', $data->address)) {
+            $move->setAddress(CashAddress::encode("bitcoincash", "pubkeyhash", hex2bin($data->address)));
         } else {
             $move->setAddress($data->address);
         }
