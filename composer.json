@@ -22,7 +22,7 @@
     "php-64bit": ">=7.1.0",
     "ext-bcmath": "*",
     "ext-curl": "*",
-    "symfony/symfony": "*",
+    "symfony/framework-bundle": "~3.0|~4.0",
     "symfony/event-dispatcher": "*",
     "analogic/socket": "^0.1",
     "lightningsale/lnd-client": "*"
