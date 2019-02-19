@@ -17,8 +17,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('analogic_cryptocurrency');
+        $treeBuilder = new TreeBuilder('analogic_cryptocurrency');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
