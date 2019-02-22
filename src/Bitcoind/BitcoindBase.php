@@ -106,7 +106,7 @@ abstract class BitcoindBase implements DaemonInterface
     {
 
         $transactions = new TransactionList();
-        $rawTransactions = $this->execute('listtransactions', array($this->account, $count));
+        $rawTransactions = $this->execute('listtransactions', array($this->account ? $this->account : "*", $count));
 
         foreach($rawTransactions->result as $t) {
             if($t->category != 'receive') continue;
