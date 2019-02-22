@@ -35,7 +35,7 @@ class Move
         return $this->account;
     }
 
-    public function setAccount(string $account): void
+    public function setAccount(?string $account): void
     {
         $this->account = $account;
     }
