@@ -82,7 +82,7 @@ abstract class BitcoindBase implements DaemonInterface
 
     public function getBalance(?int $minconf = null): int
     {
-        $btc = $this->execute('getbalance', [$this->account, $minconf ?? $this->minconf])->result;
+        $btc = $this->execute('getbalance', [$this->account ? $this->account : "*", $minconf ?? $this->minconf])->result;
         return Bitcoin::wholeToAtomic($btc);
     }
 
