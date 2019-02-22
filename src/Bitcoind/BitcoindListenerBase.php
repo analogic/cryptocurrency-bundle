@@ -39,7 +39,7 @@ abstract class BitcoindListenerBase {
 
             if ($data[0] == '{') {
                 $event = $this->newTransactionEvent($data);
-                $moves = $event->getTransaction()->getMoves()->filterByAccount($this->account);
+                $moves = $event->getTransaction()->getMoves();
 
                 if(count($moves) === 0) {
                     continue;
