@@ -30,12 +30,12 @@ class Move
         $this->atomic = $atomic;
     }
 
-    public function getAccount(): string
+    public function getAccount(): ?string
     {
         return $this->account;
     }
 
-    public function setAccount(?string $account): void
+    public function setAccount(string $account): void
     {
         $this->account = $account;
     }
