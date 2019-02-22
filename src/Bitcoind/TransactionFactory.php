@@ -107,7 +107,9 @@ class TransactionFactory implements TransactionFactoryInterface
     protected function importMove($data): Move
     {
         $move = new Move();
-        $move->setAccount($data->account);
+        if (property_exists($data, 'account')) {
+            $move->setAccount($data->account);
+        }
         $move->setCategory($data->category);
         $move->setAddress($data->address);
         $move->setAtomic(Bitcoin::wholeToAtomic($data->amount));
